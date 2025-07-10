@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+  </head>
+  <body>
+    <h1>Gestionnaire de Taches</h1>
+
+    <form id="form-tache">
+      <div>
+        <input type="text" id="titre" placeholder="Titre" required />
+        <input type="text" id="texte" placeholder="Texte" required />
+        <input type="date" id="date" required />
+        <input type="text" id="lieu" placeholder="Lieu" />
+        <input type="text" id="projet" placeholder="Projet" />
+        <select id="type">
+          <option value="tache">tache</option>
+          <option value="perso">tache perso</option>
+          <option value="pro">tache pro</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Ajouter</button>
+        <input type="text" id="filtre-mot" placeholder="Filtrer par mot-clé" />
+        <button type="button" id="btn-filtrer">Filtrer</button>
+        <input type="text" id="filtre-date" placeholder="Filtrer par date" />
+        <button type="button" id="btn-filtrerdate">Filtrer par date</button>
+        <button type="button" id="btn-vider">vider la liste</button>
+      </div>
+    </form>
+    <ul id="liste-taches"></ul>
+
+    <div>
+      <audio id="audio" src="y2mate_HOnnyD0.mp3" controls></audio>
+    </div>
+    <button id="btn-play">play</button>
+    <button id="btn-pause">pause</button>
+    <button id="btn-reset">Reset</button>
+    <span id="temps">temps :</span>
+
+    <div>
+      <h3>Géoloc</h3>
+      <button id="btn-geoloc">position</button>
+      <div id="coordonnees"></div>
+      <div id="carte" style="height: 400px"></div>
+    </div>
+
+    <div>
+      <h3>Webcam</h3>
+      <button id="btn-webcam">Webcam</button>
+      <button id="btn-photo">Photo</button>
+      <video id="video" autoplay></video>
+      <canvas
+        id="canvas"
+        style="
+          display: none;
+          width: 400px;
+          height: 300px;
+          border: 1px solid #ccc;
+        "
+      ></canvas>
+      <div id="zone-photo"></div>
+    </div>
+  </body>
+  <script type="module" src="js.js"></script>
+</html>
