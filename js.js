@@ -153,14 +153,61 @@ btngeoloc.addEventListener("click", () => {
 /*3 gestion media*/
 const btnwebcam = document.getElementById("btn-webcam");
 const btnphoto = document.getElementById("btn-photo");
+const btnRetour = document.getElementById("btn-retour");
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 
-btnwebcam.addEventListener("click", (event) => {
-  let stream = navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: false,
-  });
-  video.srcObject = stream;
-  video.onloadedmetadata = video.play();
+btnwebcam.addEventListener("click", async (event) => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false,
+    });
+    video.srcObject = stream;
+    video.onloadedmetadata = (event) => {
+      video.play();
+    };
+  } catch (error) {
+    console.error("Erreur lors de l'accès à la webcam:", error);
+    alert("Impossible d'accéder à la webcam. Vérifiez les permissions.");
+  }
+});
+
+btnphoto.addEventListener("click", () => {
+  // Capture l'image de la cam
+  const context = canvas.getContext("2d");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  // Affiche le canvas et cache la video
+  canvas.style.display = "block";
+  video.style.display = "none";
+  btnRetour.style.display = "inline-block";
+  // lien de dl
+  const image = canvas.toDataURL("image/png");
+  const doc = document.createElement("a");
+  doc.href = image;
+  doc.download = "photo.png";
+  doc.click();
+});
+
+btnRetour.addEventListener("click", () => {
+  // Retour a la cam
+  canvas.style.display = "none";
+  video.style.display = "block";
+  btnRetour.style.display = "none";
+});
+
+/*8 indexdb*/
+
+let db;
+const request = window.indexedDB.open("madbtest", 3);
+request.onerror = (event) => {
+  console.error("aled");
+};
+request.onsuccess = (event) => {
+  db = event.target.result;
+};
+const monobjet = db.createObjectStore("name", {
+  keypath: "mykey",
 });
